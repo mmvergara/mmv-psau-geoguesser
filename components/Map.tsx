@@ -66,7 +66,7 @@ const Map = () => {
     return null;
   };
   return (
-    <main className='h-screen flex flex-col z-0'>
+    <main className='h-screen flex flex-col z-0 font-Poppins'>
       <MapContainer center={PsauLocation} zoom={60} scrollWheelZoom={true} className='h-10 flex-grow  '>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright"></a>'
@@ -92,6 +92,7 @@ const Map = () => {
         <BottomNavigationAction sx={{ color: "#ffb90f" }} label='Quit' icon={<RestoreIcon />} />
         {!locationReveal && (
           <BottomNavigationAction
+            className='font-Poppins'
             sx={{ color: "#026701", backgroundColor: "#ffb90f", fontWeight: "bold", fontSize: "50px" }}
             label='Guess!'
             onClick={guessSubmitHandler}
