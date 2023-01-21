@@ -8,15 +8,14 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import ImageIcon from "@mui/icons-material/Image";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import MapMarker from "./MapMarker";
 import { getDistance, latLangToArray } from "@/utilities/helper-functions";
-import L from "leaflet";
 
 const Map = () => {
   const playerMarkerRef = useRef<Marker>(null);
   const guessMarkerRef = useRef<Marker>(null);
   const router = useRouter();
 
+  const [polyLineColor, setPolyLineColor] = useState<string>("#22c55e");
   const [locationReveal, setLocationReveal] = useState<boolean>(false);
   const [playerMarkerLocation, setPlayerMarkerLocation] = useState<LatLngExpression | null>(null);
   const [guessLocation, setGuessLocation] = useState<GuessLocation | null>(null);
@@ -32,20 +31,15 @@ const Map = () => {
     setGuessLocation(newGuessLocation);
 
     // Remove the picked location in the array
-    setLocationsToGuess((prevLocs) => {
-      return prevLocs.filter((p) => p.name != newGuessLocation.name);
-    });
+    setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.name != newGuessLocation.name));
 
-    if (locationsToGuess.length === 0) {
-      router.push("/finished");
-    }
+    if (locationsToGuess.length === 0) router.push("/finished");
   };
 
   const guessSubmitHandler = () => {
     if (guessLocation && playerMarkerLocation) {
-      console.log(playerMarkerLocation);
       const distance = getDistance(latLangToArray(guessLocation.location), playerMarkerLocation);
-      console.log({distance});
+      setPolyLineColor(distance.color);
     }
     setLocationReveal(true);
   };
@@ -78,24 +72,16 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright"></a>'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        <MapMarker
-          playerMarkerRef={playerMarkerRef}
-          eventHandlers={eventHandlers}
-          guessLocation={guessLocation}
-          guessMarkerRef={guessMarkerRef}
-          locationReveal={locationReveal}
-          playerMarkerLocation={playerMarkerLocation}
-        />
-        {/* {playerMarkerLocation && (
+        {playerMarkerLocation && (
           <MarkerPop eventHandlers={eventHandlers} position={playerMarkerLocation} ref={playerMarkerRef}>
             {guessLocation && locationReveal && (
               <>
                 <MarkerPop position={guessLocation.location} ref={guessMarkerRef} />
-                <Polyline positions={[playerMarkerLocation, guessLocation.location]} />
+                <Polyline color={polyLineColor} positions={[playerMarkerLocation, guessLocation.location]} />
               </>
             )}
           </MarkerPop>
-        )} */}
+        )}
         <MapEventComponent />
       </MapContainer>
       <button className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'>
