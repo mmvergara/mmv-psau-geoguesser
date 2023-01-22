@@ -10,6 +10,14 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { getDistance, latLangToArray } from "@/utilities/helper-functions";
 
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
+
 const Map = () => {
   const playerMarkerRef = useRef<Marker>(null);
   const guessMarkerRef = useRef<Marker>(null);
@@ -27,13 +35,15 @@ const Map = () => {
     setLocationReveal(false);
     setPlayerMarkerLocation(null);
 
+    // Pick a random location
     const newGuessLocation = locationsToGuess[Math.floor(Math.random() * locationsToGuess.length)];
     setGuessLocation(newGuessLocation);
 
-    // Remove the picked location in the array
+    // Remove the picked random location
     setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.name != newGuessLocation.name));
 
     if (locationsToGuess.length === 0) router.push("/finished");
+    handleOpenImgModal();
   };
 
   const guessSubmitHandler = () => {
@@ -65,6 +75,10 @@ const Map = () => {
     });
     return null;
   };
+  const [open, setOpen] = useState(false);
+  const handleOpenImgModal = () => setOpen(true);
+  const handleCloseImgModal = () => setOpen(false);
+
   return (
     <main className='h-screen flex flex-col z-0 font-Poppins'>
       <MapContainer center={PsauLocation} zoom={60} scrollWheelZoom={true} className='h-10 flex-grow  '>
@@ -84,15 +98,24 @@ const Map = () => {
         )}
         <MapEventComponent />
       </MapContainer>
-      <button className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'>
-        <span className='mx-2'>See Image</span>
+      <button
+        onClick={handleOpenImgModal}
+        className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'
+      >
+        <span className='mx-2'>See Image </span>
         <ImageIcon />
+        {playerMarkerLocation && playerMarkerLocation.toString().split("")}
       </button>
       <BottomNavigation showLabels sx={{ backgroundColor: "#026701" }}>
-        <BottomNavigationAction sx={{ color: "#ffb90f" }} label='Quit' icon={<RestoreIcon />} />
-        {!locationReveal && (
+        <BottomNavigationAction
+          onClick={() => router.push("/")}
+          sx={{ color: "#ffb90f" }}
+          label='Quit'
+          icon={<RestoreIcon />}
+        />
+        {!locationReveal && playerMarkerLocation && (
           <BottomNavigationAction
-            className='font-Poppins'
+            className='font-Poppins bg-psauYellow'
             sx={{ color: "#026701", backgroundColor: "#ffb90f", fontWeight: "bold", fontSize: "50px" }}
             label='Guess!'
             onClick={guessSubmitHandler}
@@ -106,8 +129,41 @@ const Map = () => {
           icon={<ArrowForwardIcon />}
         />
       </BottomNavigation>
+      <Modal
+        aria-labelledby='transition-modal-title'
+        aria-describedby='transition-modal-description'
+        open={open}
+        onClose={handleCloseImgModal}
+        closeAfterTransition
+      >
+        <Fade in={open}>
+          <Box sx={ModalStyle}>
+            <Image alt='modal' src={guessLocation?.pictureUrl || ""} width={280} height={280} />
+            <Button onClick={handleCloseImgModal} variant='contained' color='success'>
+              Close Image
+            </Button>
+          </Box>
+        </Fade>
+      </Modal>
     </main>
   );
+};
+
+const ModalStyle = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#0b450a",
+  boxShadow: 24,
+  p: 4,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+  gap: "1em",
+  border: "solid white 4px",
 };
 
 export default Map;
