@@ -8,7 +8,7 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import ImageIcon from "@mui/icons-material/Image";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { getDistance, latLangToArray } from "@/utilities/helper-functions";
+import { getDistance, latLangToArray, randomizeArray } from "@/utilities/helper-functions";
 
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -19,17 +19,16 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
 const Map = () => {
-  const playerMarkerRef = useRef<Marker>(null);
-  const guessMarkerRef = useRef<Marker>(null);
+  const playerMarkerRef = useRef<Marker>(null!);
+  const guessMarkerRef = useRef<Marker>(null!);
+  const botNavRef = useRef<HTMLDivElement>(null!);
   const router = useRouter();
 
   const [polyLineColor, setPolyLineColor] = useState<string>("#22c55e");
   const [locationReveal, setLocationReveal] = useState<boolean>(false);
   const [playerMarkerLocation, setPlayerMarkerLocation] = useState<LatLngExpression | null>(null);
   const [guessLocation, setGuessLocation] = useState<GuessLocation | null>(null);
-  const [locationsToGuess, setLocationsToGuess] = useState<GuessLocation[]>(
-    GuessLocationList.sort(() => Math.random() - 0.5)
-  );
+  const [locationsToGuess, setLocationsToGuess] = useState<GuessLocation[]>(randomizeArray(GuessLocationList));
 
   const nextGuessHandler = () => {
     setLocationReveal(false);
@@ -55,6 +54,7 @@ const Map = () => {
   };
   useEffect(() => {
     nextGuessHandler();
+    botNavRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   const eventHandlers = useMemo(
@@ -106,7 +106,7 @@ const Map = () => {
         <ImageIcon />
         {playerMarkerLocation && playerMarkerLocation.toString().split("")}
       </button>
-      <BottomNavigation showLabels sx={{ backgroundColor: "#026701" }}>
+      <BottomNavigation ref={botNavRef} showLabels sx={{ backgroundColor: "#026701" }}>
         <BottomNavigationAction
           onClick={() => router.push("/")}
           sx={{ color: "#ffb90f" }}

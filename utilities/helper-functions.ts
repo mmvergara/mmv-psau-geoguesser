@@ -30,3 +30,8 @@ export function latLangToArray(latlng: LatLngExpression) {
     .split(",")
     .map((x) => Number(x));
 }
+
+
+export function randomizeArray(arr:any[]){
+  return arr.sort(() => Math.random() - 0.5)
+}
