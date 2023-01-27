@@ -68,6 +68,14 @@ const Map = () => {
 
   return (
     <main className='h-screen flex flex-col z-0 font-Poppins'>
+      <button
+        onClick={handleOpenImgModal}
+        className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'
+      >
+        <span className='mx-2'>See Image </span>
+        <ImageIcon />
+        {playerMarkerLocation && playerMarkerLocation.toString().split("")}
+      </button>
       <BottomNavigation showLabels sx={{ bgcolor: "#026701" }}>
         <BottomNavigationAction
           onClick={() => router.push("/")}
@@ -108,14 +116,6 @@ const Map = () => {
           icon={<ArrowForwardIcon />}
         />
       </BottomNavigation>
-      <button
-        onClick={handleOpenImgModal}
-        className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'
-      >
-        <span className='mx-2'>See Image </span>
-        <ImageIcon />
-        {playerMarkerLocation && playerMarkerLocation.toString().split("")}
-      </button>
       <MapContainer center={PsauLocation} zoom={60} scrollWheelZoom={true} className='h-10 flex-grow'>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright"></a>'
