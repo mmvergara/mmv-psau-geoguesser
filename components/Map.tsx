@@ -10,12 +10,10 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { getDistance, latLangToArray, randomizeArray } from "@/utilities/helper-functions";
 
-import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
 const Map = () => {
@@ -26,8 +24,9 @@ const Map = () => {
   const [polyLineColor, setPolyLineColor] = useState<string>("#22c55e");
   const [locationReveal, setLocationReveal] = useState<boolean>(false);
   const [playerMarkerLocation, setPlayerMarkerLocation] = useState<LatLngExpression | null>(null);
-  const [guessLocation, setGuessLocation] = useState<GuessLocation | null>(null);
+
   const [locationsToGuess, setLocationsToGuess] = useState<GuessLocation[]>(randomizeArray(GuessLocationList));
+  const [currentGuessLocation, setCurrentGuessLocation] = useState<GuessLocation | null>(null);
 
   const nextGuessHandler = () => {
     setLocationReveal(false);
@@ -35,7 +34,7 @@ const Map = () => {
 
     // Pick a random location
     const newGuessLocation = locationsToGuess[Math.floor(Math.random() * locationsToGuess.length)];
-    setGuessLocation(newGuessLocation);
+    setCurrentGuessLocation(newGuessLocation);
 
     // Remove the picked random location
     setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.name != newGuessLocation.name));
@@ -45,8 +44,8 @@ const Map = () => {
   };
 
   const guessSubmitHandler = () => {
-    if (guessLocation && playerMarkerLocation) {
-      const distance = getDistance(latLangToArray(guessLocation.location), playerMarkerLocation);
+    if (currentGuessLocation && playerMarkerLocation) {
+      const distance = getDistance(latLangToArray(currentGuessLocation.location), playerMarkerLocation);
       setPolyLineColor(distance.color);
     }
     setLocationReveal(true);
@@ -76,9 +75,8 @@ const Map = () => {
           label='Quit'
           icon={<RestoreIcon />}
         />
-        {!locationReveal && playerMarkerLocation && (
+        {!locationReveal && playerMarkerLocation ? (
           <BottomNavigationAction
-            className='font-Poppins bg-psauYellow shadow-xl drop-shadow-lg'
             sx={{
               color: "#026701",
               bgcolor: "#ffb90f",
@@ -89,6 +87,19 @@ const Map = () => {
             onClick={guessSubmitHandler}
             icon={<QuestionMarkIcon />}
           />
+        ) : (
+          !playerMarkerLocation && (
+            <BottomNavigationAction
+              sx={{
+                color: "#026701",
+                bgcolor: "#ffb40f",
+                fontWeight: "bold",
+                fontSize: "50px",
+              }}
+              label='Click on the map!'
+              disabled
+            />
+          )
         )}
         <BottomNavigationAction
           sx={{ color: "#ffb90f" }}
@@ -112,10 +123,10 @@ const Map = () => {
         />
         {playerMarkerLocation && (
           <MarkerPop position={playerMarkerLocation} ref={playerMarkerRef}>
-            {guessLocation && locationReveal && (
+            {currentGuessLocation && locationReveal && (
               <>
-                <MarkerPop position={guessLocation.location} ref={guessMarkerRef} />
-                <Polyline color={polyLineColor} positions={[playerMarkerLocation, guessLocation.location]} />
+                <MarkerPop position={currentGuessLocation.location} ref={guessMarkerRef} />
+                <Polyline color={polyLineColor} positions={[playerMarkerLocation, currentGuessLocation.location]} />
               </>
             )}
           </MarkerPop>
@@ -132,7 +143,7 @@ const Map = () => {
       >
         <Fade in={open}>
           <Box sx={ModalStyle}>
-            <Image alt='modal' src={guessLocation?.pictureUrl || ""} width={280} height={280} />
+            <Image alt='modal' src={currentGuessLocation?.pictureUrl || ""} width={280} height={280} />
             <Button onClick={handleCloseImgModal} variant='contained' color='success'>
               Close Image
             </Button>
