@@ -15,7 +15,7 @@ export default function Home() {
         className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-psauYellow bg-psauGreen hover:scale-105 transition-all'
       >
         <NavigationIcon sx={{ mr: 1 }} />
-        <span className='font-Poppins'>Start Guessing!</span>
+        <span className='font-Poppins mr-2'>Start Guessing!</span>
       </div>
       <div className='flex gap-2 font-Poppins font-semibold'>
         <div className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-black bg-gray-200 hover:scale-105 transition-all'>

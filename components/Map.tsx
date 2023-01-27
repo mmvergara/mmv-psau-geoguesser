@@ -21,7 +21,6 @@ import Image from "next/image";
 const Map = () => {
   const playerMarkerRef = useRef<Marker>(null!);
   const guessMarkerRef = useRef<Marker>(null!);
-  const botNavRef = useRef<HTMLDivElement>(null!);
   const router = useRouter();
 
   const [polyLineColor, setPolyLineColor] = useState<string>("#22c55e");
@@ -54,18 +53,7 @@ const Map = () => {
   };
   useEffect(() => {
     nextGuessHandler();
-    botNavRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
-
-  const eventHandlers = useMemo(
-    () => ({
-      dragend() {
-        const marker = playerMarkerRef.current;
-        if (marker != null) setPlayerMarkerLocation(marker.getLatLng());
-      },
-    }),
-    []
-  );
 
   const MapEventComponent = () => {
     useMapEvents({
@@ -81,7 +69,7 @@ const Map = () => {
 
   return (
     <main className='h-screen flex flex-col z-0 font-Poppins'>
-      <BottomNavigation ref={botNavRef} showLabels sx={{ backgroundColor: "#064e3b" }}>
+      <BottomNavigation showLabels sx={{ bgcolor: "#026701" }}>
         <BottomNavigationAction
           onClick={() => router.push("/")}
           sx={{ color: "#ffb90f" }}
@@ -90,8 +78,13 @@ const Map = () => {
         />
         {!locationReveal && playerMarkerLocation && (
           <BottomNavigationAction
-            className='font-Poppins bg-psauYellow'
-            sx={{ color: "#026701", backgroundColor: "#ffb90f", fontWeight: "bold", fontSize: "50px" }}
+            className='font-Poppins bg-psauYellow shadow-xl drop-shadow-lg'
+            sx={{
+              color: "#026701",
+              bgcolor: "#ffb90f",
+              fontWeight: "bold",
+              fontSize: "50px",
+            }}
             label='Guess!'
             onClick={guessSubmitHandler}
             icon={<QuestionMarkIcon />}
@@ -104,13 +97,21 @@ const Map = () => {
           icon={<ArrowForwardIcon />}
         />
       </BottomNavigation>
+      <button
+        onClick={handleOpenImgModal}
+        className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'
+      >
+        <span className='mx-2'>See Image </span>
+        <ImageIcon />
+        {playerMarkerLocation && playerMarkerLocation.toString().split("")}
+      </button>
       <MapContainer center={PsauLocation} zoom={60} scrollWheelZoom={true} className='h-10 flex-grow'>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright"></a>'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {playerMarkerLocation && (
-          <MarkerPop eventHandlers={eventHandlers} position={playerMarkerLocation} ref={playerMarkerRef}>
+          <MarkerPop position={playerMarkerLocation} ref={playerMarkerRef}>
             {guessLocation && locationReveal && (
               <>
                 <MarkerPop position={guessLocation.location} ref={guessMarkerRef} />
@@ -121,14 +122,6 @@ const Map = () => {
         )}
         <MapEventComponent />
       </MapContainer>
-      <button
-        onClick={handleOpenImgModal}
-        className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'
-      >
-        <span className='mx-2'>See Image </span>
-        <ImageIcon />
-        {playerMarkerLocation && playerMarkerLocation.toString().split("")}
-      </button>
 
       <Modal
         aria-labelledby='transition-modal-title'
@@ -155,7 +148,7 @@ const ModalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "100vw",
   bgcolor: "#0b450a",
   boxShadow: 24,
   p: 4,
@@ -164,7 +157,6 @@ const ModalStyle = {
   alignItems: "center",
   flexDirection: "column",
   gap: "1em",
-  border: "solid white 4px",
 };
 
 export default Map;
