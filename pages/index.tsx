@@ -1,8 +1,7 @@
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import InfoIcon from "@mui/icons-material/Info";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { useRouter } from "next/router";
-
 
 export default function Home() {
   const router = useRouter();

@@ -1,4 +1,5 @@
 import { MapContainer, Marker as MarkerPop, Polyline, TileLayer, useMapEvents } from "react-leaflet";
+import { getDistance, latLangToArray, randomizeArray } from "@/utilities/helper-functions";
 import { GuessLocation, GuessLocationList, PsauLocation } from "@/map-api/locations";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -8,7 +9,6 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import ImageIcon from "@mui/icons-material/Image";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { getDistance, latLangToArray, randomizeArray } from "@/utilities/helper-functions";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -95,22 +95,25 @@ const Map = () => {
             onClick={guessSubmitHandler}
             icon={<QuestionMarkIcon />}
           />
+        ) : !playerMarkerLocation ? (
+          <BottomNavigationAction
+            sx={{
+              color: "#026701",
+              bgcolor: "#ffb40f",
+              fontWeight: "bold",
+              fontSize: "50px",
+            }}
+            label='Click on the map!'
+            disabled
+          />
         ) : (
-          !playerMarkerLocation && (
-            <BottomNavigationAction
-              sx={{
-                color: "#026701",
-                bgcolor: "#ffb40f",
-                fontWeight: "bold",
-                fontSize: "50px",
-              }}
-              label='Click on the map!'
-              disabled
-            />
-          )
+          ""
         )}
         <BottomNavigationAction
-          sx={{ color: "#ffb90f" }}
+          sx={{
+            color: locationReveal && playerMarkerLocation ? "#026701" : "#ffb90f",
+            backgroundColor: locationReveal && playerMarkerLocation ? "#ffb90f" : "",
+          }}
           label={locationReveal ? "Next Guess" : "Skip"}
           onClick={nextGuessHandler}
           icon={<ArrowForwardIcon />}
@@ -143,9 +146,9 @@ const Map = () => {
       >
         <Fade in={open}>
           <Box sx={ModalStyle}>
-            <Image alt='modal' src={currentGuessLocation?.pictureUrl || ""} width={280} height={280} />
-            <Button onClick={handleCloseImgModal} variant='contained' color='success'>
-              Close Image
+            <Image alt='modal' src={currentGuessLocation?.pictureUrl || ""} width={600} height={600} />
+            <Button onClick={handleCloseImgModal} sx={{ px: "4" }} variant='contained' color='success'>
+              ❌ Close
             </Button>
           </Box>
         </Fade>
