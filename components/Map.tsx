@@ -163,7 +163,7 @@ const Map = () => {
             <span className='text-white opacity-50 text-center'>Img - {currentGuessLocation?.imgProvider || ""}</span>
             <Image alt='modal' src={currentGuessLocation?.pictureUrl || ""} width={600} height={400} className="w-auto h-auto" />
             <Button onClick={handleCloseImgModal} sx={{ px: "4" }} variant='contained' color='success'>
-              ❌ Close
+              ❌ Close {currentGuessLocation?.pictureUrl}
             </Button>
           </Box>
         </Fade>

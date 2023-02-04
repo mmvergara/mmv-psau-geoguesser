@@ -30,5 +30,16 @@ export const GuessLocationList: GuessLocation[] = [
     location: [15.219558505376606, 120.6928986310959],
     pictureUrl: "/12-president-cottage.jpg",
   },
-  { imgProvider: psauClicks + " - Kapag dimo nakuha to drop kana sa psau", location: [15.219817341715572, 120.69164872169495], pictureUrl: "/13-psaucircle.jpg" },
+  {
+    imgProvider: psauClicks + " - Kapag dimo nakuha to drop kana sa psau",
+    location: [15.219817341715572, 120.69164872169495],
+    pictureUrl: "/13-psaucircle.jpg",
+  },
+  { imgProvider: psauClicks, location: [15.219982795607255, 120.6957793235779], pictureUrl: "/14-cas.jpg" },
+  { imgProvider: google, location: [15.219625176876193, 120.69183111190797], pictureUrl: "/15-entrance-psau-text.PNG" },
+  { imgProvider: google, location: [15.222003947282515, 120.694702069831], pictureUrl: "/16-trade-center.PNG" },
+  { imgProvider: google, location: [15.2201848322498, 120.69287180900575], pictureUrl: "/17-studies.PNG" },
+  { imgProvider: google, location: [15.219941643942509, 120.69233536720277], pictureUrl: "/18-playground.PNG" },
+  { imgProvider: google, location: [15.22006584918577, 120.69113910198212], pictureUrl: "/19-ova.PNG" },
+  { imgProvider: google, location: [15.22143748144984, 120.6938534975052], pictureUrl: "/20-mulberry.PNG" },
 ];
