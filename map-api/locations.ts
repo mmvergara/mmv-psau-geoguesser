@@ -3,15 +3,32 @@ import { LatLngExpression } from "leaflet";
 export const PsauLocation: LatLngExpression = [15.219, 120.6949];
 
 export type GuessLocation = {
-  name: string;
   pictureUrl: string;
-  hint: string;
+  imgProvider: string;
   location: LatLngExpression;
 };
-const image = '/1-pool.png'
+
+const { psauClicks, google } = {
+  psauClicks: "PSAU CLICKS (PitikAyti)",
+  google: "Google Maps",
+};
+
 export const GuessLocationList: GuessLocation[] = [
-  { name: "Admin", hint: "ayoko nga", location: [15.218068172625523, 120.6957632303238], pictureUrl: image },
-  { name: "Adminz", hint: "ayoko nga", location: [15.218306282663008, 120.693998336792], pictureUrl: image },
-  { name: "Admizn", hint: "ayoko nga", location: [15.71882391225057, 120.69529116153718], pictureUrl: image },
-  { name: "Admizz", hint: "ayoko nga", location: [15.21882391225057, 120.69559116153718], pictureUrl: image },
+  { imgProvider: psauClicks, location: [15.217855604682844, 120.69856882095338], pictureUrl: "/1-grandstand.jpg" },
+  { imgProvider: psauClicks, location: [15.218859768194461, 120.69447040557863], pictureUrl: "/2-near-it.jpg" },
+  { imgProvider: psauClicks, location: [15.217910912037096, 120.6980214493384], pictureUrl: "/3-grandstand.jpg" },
+  { imgProvider: psauClicks, location: [15.219941393851334, 120.695076584816], pictureUrl: "/4-cas-entrance.jpg" },
+  { imgProvider: psauClicks, location: [15.219397973167014, 120.6920349597931], pictureUrl: "/5-psauentrance.jpg" },
+  { imgProvider: psauClicks, location: [15.219760137069706, 120.69622457027437], pictureUrl: "/6-canteen.jpg" },
+  { imgProvider: psauClicks, location: [15.218973586931424, 120.69437384605409], pictureUrl: "/7-nearmulti.jpg" },
+  { imgProvider: psauClicks, location: [15.219868940758847, 120.695618391037], pictureUrl: "/8-cas.jpg" },
+  { imgProvider: psauClicks, location: [15.219868940758847, 120.695618391037], pictureUrl: "/9-cas.jpg" },
+  { imgProvider: psauClicks, location: [15.218766615634246, 120.69496393203737], pictureUrl: "/10-multi.jpg" },
+  { imgProvider: google, location: [15.22229097521822, 120.69515705108644], pictureUrl: "/11-2nd-gate.png" },
+  {
+    imgProvider: psauClicks,
+    location: [15.219558505376606, 120.6928986310959],
+    pictureUrl: "/12-president-cottage.jpg",
+  },
+  { imgProvider: psauClicks + " - Kapag dimo nakuha to drop kana sa psau", location: [15.219817341715572, 120.69164872169495], pictureUrl: "/13-psaucircle.jpg" },
 ];

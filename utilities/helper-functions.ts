@@ -16,7 +16,7 @@ export function getDistance(origin: any, destination: any) {
 
   const distance = c * EARTH_RADIUS * 1000;
   let color = "#22c55e";
-  if (distance > 40) color = "#ef4444";
+  if (distance > 51) color = "#ef4444";
 
   return { distance, color };
 }

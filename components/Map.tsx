@@ -2,9 +2,10 @@ import { MapContainer, Marker as MarkerPop, Polyline, TileLayer, useMapEvents } 
 import { getDistance, latLangToArray, randomizeArray } from "@/utilities/helper-functions";
 import { GuessLocation, GuessLocationList, PsauLocation } from "@/map-api/locations";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LatLngExpression, Marker } from "leaflet";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import RestoreIcon from "@mui/icons-material/Restore";
 import ImageIcon from "@mui/icons-material/Image";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
@@ -15,12 +16,14 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Image from "next/image";
+import { createLogicalAnd } from "typescript";
 
 const Map = () => {
   const playerMarkerRef = useRef<Marker>(null!);
   const guessMarkerRef = useRef<Marker>(null!);
   const router = useRouter();
 
+  const [score, SetScore] = useState<number>(0);
   const [polyLineColor, setPolyLineColor] = useState<string>("#22c55e");
   const [locationReveal, setLocationReveal] = useState<boolean>(false);
   const [playerMarkerLocation, setPlayerMarkerLocation] = useState<LatLngExpression | null>(null);
@@ -37,16 +40,24 @@ const Map = () => {
     setCurrentGuessLocation(newGuessLocation);
 
     // Remove the picked random location
-    setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.name != newGuessLocation.name));
+    setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.pictureUrl != newGuessLocation.pictureUrl));
 
-    if (locationsToGuess.length === 0) router.push("/finished");
+    if (locationsToGuess.length === 0) return router.push(`/finished?score=${score}`);
     handleOpenImgModal();
   };
 
   const guessSubmitHandler = () => {
     if (currentGuessLocation && playerMarkerLocation) {
-      const distance = getDistance(latLangToArray(currentGuessLocation.location), playerMarkerLocation);
-      setPolyLineColor(distance.color);
+      const res = getDistance(latLangToArray(currentGuessLocation.location), playerMarkerLocation);
+      const distance = Math.trunc(res.distance);
+      if (distance > 50) {
+        toast.error(`😟 Your guess was ${distance}m away from the location`);
+      } else {
+        toast.success(`🌟 Your guess was ${distance}m away from the location`);
+        SetScore((p) => p + 1);
+      }
+      console.log(score);
+      setPolyLineColor(res.color);
     }
     setLocationReveal(true);
   };
@@ -57,7 +68,10 @@ const Map = () => {
   const MapEventComponent = () => {
     useMapEvents({
       click: (e) => {
-        setPlayerMarkerLocation([e.latlng.lat, e.latlng.lng]);
+        if (!locationReveal) {
+          console.log([e.latlng.lat, e.latlng.lng]);
+          setPlayerMarkerLocation([e.latlng.lat, e.latlng.lng]);
+        }
       },
     });
     return null;
@@ -146,7 +160,8 @@ const Map = () => {
       >
         <Fade in={open}>
           <Box sx={ModalStyle}>
-            <Image alt='modal' src={currentGuessLocation?.pictureUrl || ""} width={600} height={600} />
+            <span className='text-white opacity-50 text-center'>Img - {currentGuessLocation?.imgProvider || ""}</span>
+            <Image alt='modal' src={currentGuessLocation?.pictureUrl || ""} width={600} height={400} className="w-auto h-auto" />
             <Button onClick={handleCloseImgModal} sx={{ px: "4" }} variant='contained' color='success'>
               ❌ Close
             </Button>
