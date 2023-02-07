@@ -2,6 +2,11 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import InfoIcon from "@mui/icons-material/Info";
 import { useRouter } from "next/router";
+export const getStaticProps = async () => {
+  return {
+    props: {},
+  };
+};
 
 export default function Home() {
   const router = useRouter();
@@ -29,7 +34,12 @@ export default function Home() {
       <div>
         <h5 className='text-psauGreen font-bold text-center'>Special thanks to</h5>
         <ul className='mt-2 font-bold '>
-          <a href='https://www.facebook.com/PSAUCLICKS' rel='noopener noreferrer' target='_blank' className="hover:scale-105 hover:underline">
+          <a
+            href='https://www.facebook.com/PSAUCLICKS'
+            rel='noopener noreferrer'
+            target='_blank'
+            className='hover:scale-105 hover:underline'
+          >
             PSAU CLICK 📸 (For Providing Images)
           </a>
           <li>Beta Testers</li>

@@ -4,6 +4,7 @@ import { GuessLocation, GuessLocationList, PsauLocation } from "@/map-api/locati
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { LatLngExpression, Marker } from "leaflet";
+import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import RestoreIcon from "@mui/icons-material/Restore";
@@ -82,6 +83,15 @@ const Map = () => {
 
   return (
     <main className='h-screen flex flex-col z-0 font-Poppins'>
+      <ToastContainer
+        position='bottom-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        theme='light'
+      />
       <button
         onClick={handleOpenImgModal}
         className='text-psauYellow bg-emerald-900 py-3 font-semibold hover:bg-emerald-800 shadow-xl drop-shadow-lg'
@@ -161,7 +171,13 @@ const Map = () => {
         <Fade in={open}>
           <Box sx={ModalStyle}>
             <span className='text-white opacity-50 text-center'>Img - {currentGuessLocation?.imgProvider || ""}</span>
-            <Image alt='modal' src={currentGuessLocation?.pictureUrl || ""} width={600} height={400} className="w-auto h-auto" />
+            <Image
+              alt='modal'
+              src={currentGuessLocation?.pictureUrl || ""}
+              width={600}
+              height={400}
+              className='w-auto h-auto'
+            />
             <Button onClick={handleCloseImgModal} sx={{ px: "4" }} variant='contained' color='success'>
               ❌ Close {currentGuessLocation?.pictureUrl}
             </Button>
