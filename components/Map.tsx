@@ -98,7 +98,6 @@ const Map = () => {
       >
         <span className='mx-2'>See Image </span>
         <ImageIcon />
-        {playerMarkerLocation && playerMarkerLocation.toString().split("")}
       </button>
       <BottomNavigation showLabels sx={{ bgcolor: "#026701" }}>
         <BottomNavigationAction
@@ -179,7 +178,8 @@ const Map = () => {
               className='w-auto h-auto'
             />
             <Button onClick={handleCloseImgModal} sx={{ px: "4" }} variant='contained' color='success'>
-              ❌ Close {currentGuessLocation?.pictureUrl}
+              ❌ Close 
+              {/* {currentGuessLocation?.pictureUrl} */}
             </Button>
           </Box>
         </Fade>
