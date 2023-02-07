@@ -26,6 +26,15 @@ export default function Home() {
           <QuestionMarkIcon sx={{ mr: 1 }} /> How to Play
         </div>
       </div>
+      <div>
+        <h5 className='text-psauGreen font-bold text-center'>Special thanks to</h5>
+        <ul className='mt-2 font-bold '>
+          <a href='https://www.facebook.com/PSAUCLICKS' rel='noopener noreferrer' target='_blank' className="hover:scale-105 hover:underline">
+            PSAU CLICK 📸 (For Providing Images)
+          </a>
+          <li>Beta Testers</li>
+        </ul>
+      </div>
     </main>
   );
 }

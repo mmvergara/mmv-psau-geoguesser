@@ -23,7 +23,7 @@ export const GuessLocationList: GuessLocation[] = [
   { imgProvider: psauClicks, location: [15.218973586931424, 120.69437384605409], pictureUrl: "/7-nearmulti.jpg" },
   { imgProvider: psauClicks, location: [15.219868940758847, 120.695618391037], pictureUrl: "/8-cas.jpg" },
   { imgProvider: psauClicks, location: [15.219868940758847, 120.695618391037], pictureUrl: "/9-cas.jpg" },
-  { imgProvider: psauClicks, location: [15.218766615634246, 120.69496393203737], pictureUrl: "/10-multi.jpg" },
+  { imgProvider: psauClicks, location: [15.219242706105556, 120.69373011589052], pictureUrl: "/10-multi.jpg" },
   { imgProvider: google, location: [15.22229097521822, 120.69515705108644], pictureUrl: "/11-2nd-gate.png" },
   {
     imgProvider: psauClicks,
