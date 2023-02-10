@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
-import Link from "next/link";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { useRouter } from "next/router";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import uniqid from "uniqid";
 
 const Finished: React.FC = () => {
   const router = useRouter();
@@ -25,6 +25,14 @@ const Finished: React.FC = () => {
       >
         <NavigationIcon sx={{ mr: 1 }} />
         <span className='font-Poppins mr-2'>Play Again !</span>
+      </div>
+      <h2 className='text-center text-xl  sm:text-2xl text-psauGreen font-Poppins font-bold tracking-wide underline'>
+        psau-geoguesser.vercel.app
+      </h2>
+      <div className='flex gap-2 font-Poppins font-semibold'>
+        <div className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-black bg-gray-200 hover:scale-105 transition-all'>
+          <BarChartIcon sx={{ mr: 1 }} /> {"Leaderboards"}
+        </div>
       </div>
     </main>
   );

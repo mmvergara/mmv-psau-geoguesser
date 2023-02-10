@@ -17,7 +17,6 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Image from "next/image";
-import { createLogicalAnd } from "typescript";
 
 const Map = () => {
   const playerMarkerRef = useRef<Marker>(null!);
@@ -169,7 +168,7 @@ const Map = () => {
       >
         <Fade in={open}>
           <Box sx={ModalStyle}>
-            <span className='text-white opacity-50 text-center'>Img - {currentGuessLocation?.imgProvider || ""}</span>
+            <span className='font-bold text-white font-Poppins tracking-wide'>Current Score: {score} / 50</span>
             <Image
               alt='modal'
               src={currentGuessLocation?.pictureUrl || ""}
@@ -178,8 +177,7 @@ const Map = () => {
               className='w-auto h-auto'
             />
             <Button onClick={handleCloseImgModal} sx={{ px: "4" }} variant='contained' color='success'>
-              ❌ Close 
-              {/* {currentGuessLocation?.pictureUrl} */}
+              ❌ Close
             </Button>
           </Box>
         </Fade>
