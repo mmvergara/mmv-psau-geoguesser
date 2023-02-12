@@ -4,7 +4,7 @@ export const PsauLocation: LatLngExpression = [15.219, 120.6949];
 
 export type GuessLocation = {
   pictureUrl: string;
-  imgProvider: string;
+  imgProvider?: string;
   location: LatLngExpression;
 };
 
@@ -42,4 +42,13 @@ export const GuessLocationList: GuessLocation[] = [
   { imgProvider: google, location: [15.219941643942509, 120.69233536720277], pictureUrl: "/18-playground.PNG" },
   { imgProvider: google, location: [15.22006584918577, 120.69113910198212], pictureUrl: "/19-ova.PNG" },
   { imgProvider: google, location: [15.22143748144984, 120.6938534975052], pictureUrl: "/20-mulberry.PNG" },
+  { location: [15.218704397742686, 120.69587588310243], pictureUrl: "/21-avc.jpg" },
+  { location: [15.218119513540781, 120.69633722305299], pictureUrl: "/22-near-vet.jpg" },
+  { location: [15.214439076693214, 120.65945148468019], pictureUrl: "/23-magalang-terminal.png" },
+  { location: [15.218088254527709, 120.69647669792177], pictureUrl: "/24-vet.jpg" },
+  { location: [15.21851291645616, 120.70089161396027], pictureUrl: "/25-forestry.jpg" },
+  { location: [15.219894908939422, 120.69922327995302], pictureUrl: "/26-ladies-dorm.jpg" },
+  { location: [15.217601326251643, 120.69696568499988], pictureUrl: "/27-vet.jpg" },
+  { location: [15.219760416232308, 120.69498538970949], pictureUrl: "/28-coed.jpg" },
+  { location: [15.2168616583071, 120.69329023361207], pictureUrl: "/29-castech.jpg" },
 ];

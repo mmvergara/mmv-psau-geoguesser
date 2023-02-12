@@ -35,7 +35,7 @@ const Finished: React.FC = () => {
       </h1>
       <h2 className='text-center text-xl sm:text-2xl text-psauGreen font-Poppins font-bold tracking-wide'>
         {" "}
-        You scored: <span className='underline '>{score || 0}</span> / 50 | Game ID: <span className='underline '>{id}</span>
+        You scored: <span className='underline '>{score || 0}</span> / 30 | Game ID: <span className='underline '>{id}</span>
       </h2>
       <div
         onClick={() => router.push("/guess")}
