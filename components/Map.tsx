@@ -11,7 +11,8 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import ImageIcon from "@mui/icons-material/Image";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
+import uniqid from "uniqid";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
@@ -31,7 +32,7 @@ const Map = () => {
   const [locationsToGuess, setLocationsToGuess] = useState<GuessLocation[]>(randomizeArray(GuessLocationList));
   const [currentGuessLocation, setCurrentGuessLocation] = useState<GuessLocation | null>(null);
 
-  const nextGuessHandler = () => {
+  const nextGuessHandler = async () => {
     setLocationReveal(false);
     setPlayerMarkerLocation(null);
 
@@ -42,7 +43,11 @@ const Map = () => {
     // Remove the picked random location
     setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.pictureUrl != newGuessLocation.pictureUrl));
 
-    if (locationsToGuess.length === 0) return router.push(`/finished?score=${score}`);
+    if (locationsToGuess.length === 0) {
+      const id = uniqid();
+      await axios.put("/api/create", { score: score, id });
+      return router.push(`/finished?id=${id}`);
+    }
     handleOpenImgModal();
   };
 

@@ -1,23 +1,41 @@
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { useRouter } from "next/router";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import uniqid from "uniqid";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Finished: React.FC = () => {
   const router = useRouter();
-  const score = router.query.score || "0";
+  const id = router.query.id;
+  const [score, setScore] = useState<number>(0);
+
+  useEffect(() => {
+    const getScore = async () => {
+      if (!router.isReady) return;
+      try {
+        const {
+          data: { data },
+        } = await axios.get("/api/get?id=" + id);
+        setScore(data.score);
+      } catch (error) {
+        router.push("/");
+      }
+    };
+    getScore();
+    console.log("useeffect");
+  }, [id, router]);
 
   return (
     <main className='h-screen w-screen flex justify-center items-center gap-4 flex-col bg-yellow-200 '>
       <h1 className='text-center text-4xl sm:text-7xl text-psauGreen font-Poppins font-bold tracking-wide'>
         Psau Geoguesser
       </h1>{" "}
-      <h1 className='text-center text-2xl sm:text-5xl text-psauGreen font-Poppins font-bold tracking-wide'>
+      <h1 className='text-center text-2xl sm:text-5xl text-psauYellow font-Poppins font-bold tracking-wide'>
         Thank you for playing 🥳
       </h1>
       <h2 className='text-center text-xl sm:text-2xl text-psauGreen font-Poppins font-bold tracking-wide'>
         {" "}
-        You scored: <span className='underline'>{score}</span> / 50
+        You scored: <span className='underline '>{score || 0}</span> / 50 | Game ID: <span className='underline '>{id}</span>
       </h2>
       <div
         onClick={() => router.push("/guess")}
