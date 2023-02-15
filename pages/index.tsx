@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import Head from "next/head";
+import Link from "next/link";
 
 export const getStaticProps = async () => {
   return {
@@ -21,6 +23,10 @@ export default function Home() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
+    <>
+    <Head>
+      <title>Psau Geoguesser</title>
+    </Head>
     <main className='h-screen w-screen flex justify-center items-center gap-4 flex-col bg-yellow-200 '>
       <h1 className='text-center text-4xl sm:text-7xl text-psauGreen font-Poppins font-bold tracking-wide'>
         Psau Geoguesser
@@ -34,9 +40,9 @@ export default function Home() {
         <span className='font-Poppins font-bold tracking-wider mr-2'>Start Guessing! </span>
       </div>
       <div className='flex gap-2 font-Poppins font-semibold'>
-        <div className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-black bg-gray-200 hover:scale-105 transition-all'>
+        <Link href="/about" className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-black bg-gray-200 hover:scale-105 transition-all'>
           <InfoIcon sx={{ mr: 1 }} /> About
-        </div>
+        </Link>
         <div
           onClick={handleOpen}
           className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-black bg-gray-200 hover:scale-105 transition-all'
@@ -90,6 +96,8 @@ export default function Home() {
         </Box>
       </Modal>
     </main>
+    </>
+
   );
 }
 
