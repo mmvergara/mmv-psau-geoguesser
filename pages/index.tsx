@@ -25,11 +25,11 @@ export default function Home() {
   return (
     <>
     <Head>
-      <title>Psau Geoguesser</title>
+      <title>PSAU Geoguesser 🌍</title>
     </Head>
     <main className='h-screen w-screen flex justify-center items-center gap-4 flex-col bg-yellow-200 '>
       <h1 className='text-center text-4xl sm:text-7xl text-psauGreen font-Poppins font-bold tracking-wide'>
-        Psau Geoguesser
+        PSAU Geoguesser
       </h1>
       <p className='text-center mx-2'>By: Vergara, Mark Matthew BSIT 2-A {"2022-2023"}</p>
       <div

@@ -173,7 +173,7 @@ const Map = () => {
       >
         <Fade in={open}>
           <Box sx={ModalStyle}>
-            <span className='font-bold text-white font-Poppins tracking-wide'>Current Score: {score} / 50</span>
+            <span className='font-bold text-white font-Poppins tracking-wide'>Current Score: {score} / 30</span>
             <Image
               alt='modal'
               src={currentGuessLocation?.pictureUrl || ""}
