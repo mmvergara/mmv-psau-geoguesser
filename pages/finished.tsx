@@ -1,7 +1,7 @@
-import NavigationIcon from "@mui/icons-material/Navigation";
-import { useRouter } from "next/router";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import BarChartIcon from "@mui/icons-material/BarChart";
 import axios from "axios";
 import Head from "next/head";
 
@@ -54,7 +54,7 @@ const Finished: React.FC = () => {
           psau-geoguesser.vercel.app
         </h2>
         <div className='flex gap-2 font-Poppins font-semibold'>
-          <div className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-black bg-gray-200 hover:scale-105 transition-all'>
+          <div onClick={()=>router.push("/leaderboards")} className='cursor-pointer flex px-4 py-4 items-center rounded-full boxShadow text-black bg-gray-200 hover:scale-105 transition-all'>
             <BarChartIcon sx={{ mr: 1 }} /> {"Leaderboards"}
           </div>
         </div>
