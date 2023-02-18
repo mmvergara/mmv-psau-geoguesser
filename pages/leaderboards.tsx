@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Head from "next/head";
 
 const Leaderboards: React.FC = () => {
   const router = useRouter();
@@ -21,11 +22,12 @@ const Leaderboards: React.FC = () => {
     };
     getLeaderboards();
   }, []);
-  console.log(leaderboards);
 
   return (
     <main className='h-screen w-screen flex pt-8 items-center gap-4 flex-col bg-yellow-200 px-2'>
-      {" "}
+      <Head>
+        <title>Leaderboards 🏆</title>
+      </Head>
       <h1 className='text-center text-4xl sm:text-7xl text-psauGreen font-Poppins font-bold tracking-wide'>
         Leaderboards 🏆
       </h1>
