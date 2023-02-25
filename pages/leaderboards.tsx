@@ -22,6 +22,7 @@ const Leaderboards: React.FC = () => {
     };
     getLeaderboards();
   }, []);
+  console.log(leaderboards[0]);
 
   return (
     <main className='h-screen w-screen flex pt-8 items-center gap-4 flex-col bg-yellow-200 px-2'>
@@ -45,11 +46,12 @@ const Leaderboards: React.FC = () => {
         leaderboards.map((leaderboard, i) => {
           return (
             <div key={leaderboard.id} className='flex w-[100%] justify-center items-start '>
-              <div className='mt-2 bg-psauGreen text-white font-semibold p-4 max-w-[400px] w-[100%] flex justify-between border-t-4 border-psauYellow'>
+              <div className='mt-2 bg-psauGreen text-white font-semibold p-4 max-w-[400px] w-[100%] flex justify-between border-t-4 border-psauYellow flex-wrap'>
                 <div>
-                  {i} - {leaderboard.id}
+                  {i+1} - {leaderboard.name || leaderboard.id}
                 </div>{" "}
                 <div>Score : {leaderboard.score} / 30</div>
+                <div className='w-[100%] font-thin opacity-50'>Game ID: {leaderboard.id}</div>
               </div>
             </div>
           );

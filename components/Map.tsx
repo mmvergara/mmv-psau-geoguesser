@@ -1,7 +1,7 @@
 import { MapContainer, Marker as MarkerPop, Polyline, TileLayer, useMapEvents } from "react-leaflet";
 import { getDistance, latLangToArray, randomizeArray } from "@/utilities/helper-functions";
 import { GuessLocation, GuessLocationList, PsauLocation } from "@/map-api/locations";
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, CircularProgress, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { LatLngExpression, Marker } from "leaflet";
 import { ToastContainer } from "react-toastify";
@@ -44,9 +44,8 @@ const Map = () => {
     setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.pictureUrl != newGuessLocation.pictureUrl));
 
     if (locationsToGuess.length === 0) {
-      const id = uniqid();
-      await axios.put("/api/create", { score: score, id });
-      return router.push(`/finished?id=${id}`);
+      toast.success("🎉 You guessed all the locations, submit your score");
+      handleOpenNameModal();
     }
     handleOpenImgModal();
   };
@@ -84,6 +83,24 @@ const Map = () => {
   const [open, setOpen] = useState(false);
   const handleOpenImgModal = () => setOpen(true);
   const handleCloseImgModal = () => setOpen(false);
+
+  const [nickname, setNickname] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [nameModal, setNameModal] = useState(false);
+  const handleSubmitScore = async () => {
+    const id = uniqid(nickname.replace(/\s/g, ""));
+    setIsLoading(true);
+    try {
+      await axios.put("/api/create", { score: score, id, name: nickname });
+    } catch (error) {
+      router.push(`/finished?id=${id}`);
+    }
+    toast.success("Score Submitted");
+    router.push(`/finished?id=${id}`);
+    setIsLoading(false);
+  };
+  const handleOpenNameModal = () => setNameModal(true);
+  const handleCloseNameModal = () => setNameModal(false);
 
   return (
     <main className='h-screen flex flex-col z-0 font-Poppins'>
@@ -187,6 +204,37 @@ const Map = () => {
           </Box>
         </Fade>
       </Modal>
+
+      <Modal
+        aria-labelledby='transition-modal-title'
+        aria-describedby='transition-modal-description'
+        open={true}
+        onClose={handleCloseNameModal}
+        closeAfterTransition
+      >
+        <Fade in={true}>
+          <Box sx={{ ...ModalStyle, bgcolor: "white" }}>
+            <span className='font-Poppins tracking-wide'>You scored {score} / 30 ! </span>
+            <span className='font-Poppins tracking-wide '>Type in you nickname to show it on leaderboards</span>
+            <span className='font-Poppins tracking-wide text-red-700 opacity-60'>
+              warning your nickname will be public!
+            </span>
+            <TextField
+              onChange={(e) => setNickname(e.target.value)}
+              id='outlined-basic'
+              label='Nickname (optional)'
+              variant='filled'
+              style={{ margin: "1em" }}
+            />
+            {!isLoading && (
+              <Button onClick={handleSubmitScore} sx={{ px: "4" }} type='button' variant='contained' color='primary'>
+                {"Submit Score"}
+              </Button>
+            )}
+            {isLoading && <CircularProgress color='success' />}
+          </Box>
+        </Fade>
+      </Modal>
     </main>
   );
 };
@@ -204,7 +252,6 @@ const ModalStyle = {
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
-  gap: "1em",
 };
 
 export default Map;
