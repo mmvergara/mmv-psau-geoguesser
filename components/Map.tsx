@@ -208,11 +208,11 @@ const Map = () => {
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
-        open={true}
+        open={nameModal}
         onClose={handleCloseNameModal}
         closeAfterTransition
       >
-        <Fade in={true}>
+        <Fade in={nameModal}>
           <Box sx={{ ...ModalStyle, bgcolor: "white" }}>
             <span className='font-Poppins tracking-wide'>You scored {score} / 30 ! </span>
             <span className='font-Poppins tracking-wide '>Type in you nickname to show it on leaderboards</span>
