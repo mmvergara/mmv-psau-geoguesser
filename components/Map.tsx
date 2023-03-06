@@ -28,11 +28,11 @@ const Map = () => {
   const [polyLineColor, setPolyLineColor] = useState<string>("#22c55e");
   const [locationReveal, setLocationReveal] = useState<boolean>(false);
   const [playerMarkerLocation, setPlayerMarkerLocation] = useState<LatLngExpression | null>(null);
-
   const [locationsToGuess, setLocationsToGuess] = useState<GuessLocation[]>(randomizeArray(GuessLocationList));
   const [currentGuessLocation, setCurrentGuessLocation] = useState<GuessLocation | null>(null);
 
   const nextGuessHandler = async () => {
+    console.log(locationsToGuess.length);
     setLocationReveal(false);
     setPlayerMarkerLocation(null);
 
@@ -42,6 +42,7 @@ const Map = () => {
 
     // Remove the picked random location
     setLocationsToGuess((prevLocs) => prevLocs.filter((p) => p.pictureUrl != newGuessLocation.pictureUrl));
+    console.log(locationsToGuess.length);
 
     if (locationsToGuess.length === 0) {
       toast.success("🎉 You guessed all the locations, submit your score");

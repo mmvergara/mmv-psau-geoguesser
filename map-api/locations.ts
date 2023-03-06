@@ -51,4 +51,5 @@ export const GuessLocationList: GuessLocation[] = [
   { location: [15.217601326251643, 120.69696568499988], pictureUrl: "/27-vet.jpg" },
   { location: [15.219760416232308, 120.69498538970949], pictureUrl: "/28-coed.jpg" },
   { location: [15.2168616583071, 120.69329023361207], pictureUrl: "/29-castech.jpg" },
+  { location: [15.216105603807188, 120.69227584332869], pictureUrl: "/30-infirmary.jpg" },
 ];
